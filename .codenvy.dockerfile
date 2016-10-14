@@ -1,29 +1,27 @@
-FROM gcr.io/stacksmith-images/ubuntu-buildpack:14.04-r9
+FROM gcr.io/stacksmith-images/ubuntu-buildpack:14.04-r10
 
 MAINTAINER Bitnami <containers@bitnami.com>
 
 ENV BITNAMI_APP_NAME=symfony \
-    BITNAMI_IMAGE_VERSION=3.1.3-r0 \
-    PATH=/opt/bitnami/java/bin:/opt/bitnami/symfony:/opt/bitnami/php/bin:/opt/bitnami/mysql/bin/:$PATH \
-    TERM=xterm
+    BITNAMI_IMAGE_VERSION=3.1.3-r1 \
+    PATH=/opt/bitnami/symfony:/opt/bitnami/php/bin:/opt/bitnami/mysql/bin/:$PATH
 
-# Install java dependency
-RUN bitnami-pkg install java-1.8.0_91-0 --checksum 64cf20b77dc7cce3a28e9fe1daa149785c9c8c13ad1249071bc778fa40ae8773
-
-# Install Symfony related dependencies
-RUN bitnami-pkg install php-7.0.10-0 --checksum 5f2ec47fcfb2fec5197af6760c5053dd5dee8084d70a488fd5ea77bd4245c6b9
+# Install Symfony dependencies
+RUN bitnami-pkg install php-7.0.11-1 --checksum cc9129523269e86728eb81ac489c65996214f22c6447bbff4c2306ec4be3c871
 RUN bitnami-pkg install mysql-client-10.1.13-4 --checksum 14b45c91dd78b37f0f2366712cbe9bfdf2cb674769435611955191a65dbf4976
-RUN bitnami-pkg install mariadb-10.1.14-4 --checksum 4a75f4f52587853d69860662626c64a4540126962cd9ee9722af58a3e7cfa01b
+RUN bitnami-pkg install mariadb-10.1.17-1 --checksum 003be4c827669dae149d4a4639dfc7dcb5766b76aeccf477b4912ae000290768
 
-# Install symfony module
+# Install Symfony module
 RUN bitnami-pkg install symfony-3.1.3-0 --checksum 93cdf97999dc72fcfac444e8ab12797452cc5b02c16d05e092e5a537af41e70c -- --applicationDirectory /projects
 
 EXPOSE 8000
 
-# Interact with Eclipse che
+# Set up Codenvy integration
 LABEL che:server:8000:ref=symfony che:server:8000:protocol=http
 
 USER bitnami
 WORKDIR /projects
 
-CMD ["sudo", "HOME=/root", "/opt/bitnami/nami/bin/nami", "start", "--foreground", "mariadb"]
+ENV TERM=xterm
+
+CMD ["/entrypoint.sh", "sudo", "HOME=/root", "/opt/bitnami/nami/bin/nami", "start", "--foreground", "mariadb"]

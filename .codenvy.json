@@ -1,36 +1,37 @@
 {
   "v": "4.0",
   "workspace": {
-    "name": "symfony",
-    "defaultEnv": "symfony",
-    "environments": [
-      {
-        "name": "symfony",
-        "recipe": null,
-        "machineConfigs": [
-          {
-            "name": "ws-machine",
-            "limits": {
-              "ram": 1024
-            },
-            "source": {
-              "type": "image",
-              "location": "bitnami/che-symfony:che-3.1.3-r0"
-            },
-            "type": "docker",
-            "dev": true
+    "environments": {
+      "default": {
+        "recipe": {
+          "type": "dockerimage",
+          "location": "bitnami/che-symfony:che-4.14.0-r3"
+        },
+        "machines": {
+          "ws-machine": {
+            "agents": [
+              "org.eclipse.che.terminal",
+              "org.eclipse.che.ws-agent",
+              "org.eclipse.che.ssh"
+            ],
+            "servers": {},
+            "attributes": {
+              "memoryLimitsBytes": "1073741824"
+            }
           }
-        ]
+        }
       }
-    ],
+    },
+    "name": "bitnami-symfony",
+    "defaultEnv": "default",
     "projects": [
       {
-        "name": "symfony_sample",
+        "name": "symfony",
         "type": "blank",
-        "path": "/symfony_sample",
+        "path": "/symfony",
         "source": {
           "type": "git",
-          "location": "https://github.com/bitnami/bitnami-docker-che-blank-sample",
+          "location": "https://github.com/bitnami/bitnami-docker-che-blank-sample.git",
           "parameters": {
             "keepVcs": "false"
           }
@@ -56,9 +57,9 @@
         }
       },
       {
-        "name": "1. Create project",
+        "name": "1. Create and run project",
         "type": "custom",
-        "commandLine": "source /opt/bitnami/stacksmith-utils.sh && print_welcome_page && sudo HOME=/root nami execute symfony createProject --force symfony_sample | grep -v undefined && ln -fs ${current.project.path}/web/app.php ${current.project.path}/web/index.php && php -S 0.0.0.0:8000 -t ${current.project.path}/web",
+        "commandLine": "source /opt/bitnami/stacksmith-utils.sh && print_welcome_page && sudo HOME=/root nami execute symfony createProject --force $(basename ${current.project.path}) | grep -v undefined && ln -fs ${current.project.path}/web/app.php ${current.project.path}/web/index.php && php -S 0.0.0.0:8000 -t ${current.project.path}/web",
         "attributes": {
            "previewUrl": "http://${server.port.8000}/"
         }
@@ -70,7 +71,7 @@
       "actions": [
         {
           "properties": {
-            "name": "1. Create project"
+            "name": "1. Create and run project"
           },
           "id": "runCommand"
         }
