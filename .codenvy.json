@@ -5,7 +5,7 @@
       "default": {
         "recipe": {
           "type": "dockerimage",
-          "location": "bitnami/che-symfony:che-3.1.3-r3"
+          "location": "bitnami/che-symfony:che-3.1.3-r4"
         },
         "machines": {
           "ws-machine": {
