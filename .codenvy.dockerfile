@@ -3,7 +3,7 @@ FROM gcr.io/stacksmith-images/minideb-buildpack:jessie-r8
 MAINTAINER Bitnami <containers@bitnami.com>
 
 ENV BITNAMI_APP_NAME=che-symfony \
-    BITNAMI_IMAGE_VERSION=3.1.3-r8 \
+    BITNAMI_IMAGE_VERSION=3.1.3-r9 \
     PATH=/opt/bitnami/symfony:/opt/bitnami/php/bin:/opt/bitnami/mysql/bin/:$PATH
 
 # Install Symfony dependencies
