@@ -4,7 +4,7 @@ MAINTAINER Bitnami <containers@bitnami.com>
 
 RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list
 RUN apt-get update && apt-get install -t jessie-backports -y openjdk-8-jdk-headless
-RUN install_packages git subversion openssh-server rsync
+RUN install_packages git subversion openssh-server rsync libjemalloc1 libxslt1.1 libtidy-0.99-0 libmcrypt4 libicu52
 RUN mkdir /var/run/sshd && sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 
 ENV BITNAMI_APP_NAME=che-symfony \
