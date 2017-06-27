@@ -1,4 +1,4 @@
-FROM gcr.io/stacksmith-images/minideb-buildpack:jessie-r9
+FROM gcr.io/stacksmith-images/minideb-buildpack:jessie-r11
 
 MAINTAINER Bitnami <containers@bitnami.com>
 
@@ -8,19 +8,17 @@ RUN install_packages git subversion openssh-server rsync
 RUN mkdir /var/run/sshd && sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 
 ENV BITNAMI_APP_NAME=che-symfony \
-    BITNAMI_IMAGE_VERSION=3.2.4-r0 \
+    BITNAMI_IMAGE_VERSION=3.3.2-r0 \
     PATH=/opt/bitnami/symfony:/opt/bitnami/php/bin:/opt/bitnami/mysql/bin/:$PATH
 
 # System packages required
-RUN install_packages libc6 zlib1g libxslt1.1 libtidy-0.99-0 libreadline6 libncurses5 libtinfo5 libmcrypt4 libldap-2.4-2 libstdc++6 libgmp10 libpng12-0 libjpeg62-turbo libbz2-1.0 libxml2 libssl1.0.0 libcurl3 libfreetype6 libicu52 libgcc1 libgcrypt20 libsasl2-2 libgnutls-deb0-28 liblzma5 libidn11 librtmp1 libssh2-1 libgssapi-krb5-2 libkrb5-3 libk5crypto3 libcomerr2 libgpg-error0 libp11-kit0 libtasn1-6 libnettle4 libhogweed2 libkrb5support0 libkeyutils1 libffi6 libjemalloc1 libsybdb5 libpq5
+RUN install_packages libbz2-1.0 libc6 libcomerr2 libcurl3 libffi6 libfreetype6 libgcc1 libgcrypt20 libgmp10 libgnutls-deb0-28 libgpg-error0 libgssapi-krb5-2 libhogweed2 libicu52 libidn11 libjpeg62-turbo libk5crypto3 libkeyutils1 libkrb5-3 libkrb5support0 libldap-2.4-2 liblzma5 libmcrypt4 libncurses5 libnettle4 libp11-kit0 libpng12-0 libpq5 libreadline6 librtmp1 libsasl2-2 libssh2-1 libssl1.0.0 libstdc++6 libsybdb5 libtasn1-6 libtidy-0.99-0 libtinfo5 libxml2 libxslt1.1 zlib1g
 
-# Install Symfony dependencies
-RUN bitnami-pkg install php-7.0.16-0 --checksum f59c28b5c169aca61cde263facd6472f10b66d211f361f87cf8244b5d6f1e280
-RUN bitnami-pkg install mysql-client-10.1.21-1 --checksum 63155b08efa834316c47f29200a667f6d52506063dae861eb1edfba4266a9d62
-RUN bitnami-pkg install mariadb-10.1.21-0 --checksum ecf191e709c35881b69ff5aea22da984b6d05d4b751a0d5a72fa74bb02b71eea
-
-# Install Symfony module
-RUN bitnami-pkg install symfony-3.2.4-0 --checksum 5717ecd1f05745befa8ca0a746a5f11b0ed7a291e033350c001b616015ab6a5b -- --applicationDirectory /projects
+# Install Symfony dependencies and module
+RUN bitnami-pkg install php-7.0.20-0 --checksum 78181d1320567be07448e75e4783ce0269b433fc9e7ed8eff67abcff7f7327e9
+RUN bitnami-pkg install mysql-client-10.1.24-0 --checksum 3ac33998eefe09a8013036d555f2a8265fc446a707e8d61c63f8621f4a3e5dae
+RUN bitnami-pkg unpack mariadb-10.1.24-1 --checksum 0ad8567f9d3d8371f085b56854b5288be38c85a5cb3cd4e36d8355eb6bbbd4cd
+RUN bitnami-pkg install symfony-3.3.2-0 --checksum 16674cabcb2c1de640f4a30c7d3480e79b18267ef5f9080589f3635142850b39
 
 EXPOSE 8000
 
