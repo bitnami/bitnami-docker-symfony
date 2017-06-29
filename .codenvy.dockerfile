@@ -18,7 +18,7 @@ RUN install_packages libbz2-1.0 libc6 libcomerr2 libcurl3 libffi6 libfreetype6 l
 RUN bitnami-pkg install php-7.0.20-0 --checksum 78181d1320567be07448e75e4783ce0269b433fc9e7ed8eff67abcff7f7327e9
 RUN bitnami-pkg install mysql-client-10.1.24-0 --checksum 3ac33998eefe09a8013036d555f2a8265fc446a707e8d61c63f8621f4a3e5dae
 RUN bitnami-pkg install mariadb-10.1.24-1 --checksum 0ad8567f9d3d8371f085b56854b5288be38c85a5cb3cd4e36d8355eb6bbbd4cd -- --allowEmptyPassword yes
-RUN bitnami-pkg install symfony-3.3.2-0 --checksum 16674cabcb2c1de640f4a30c7d3480e79b18267ef5f9080589f3635142850b39
+RUN bitnami-pkg install symfony-3.3.2-0 --checksum 16674cabcb2c1de640f4a30c7d3480e79b18267ef5f9080589f3635142850b39 -- --applicationDirectory /projects
 
 EXPOSE 8000
 
